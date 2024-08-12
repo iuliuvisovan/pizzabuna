@@ -1,0 +1,23 @@
+.App {
+  height: 100%;
+  padding: 24px;
+
+  input {
+    border-radius: 3px;
+    width: 64px;
+    text-align: center;
+    margin: 0px 8px 0px 8px;
+  }
+
+  div {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+  }
+
+  p {
+    display: inline-flex;
+    align-items: center;
+  }
+}
