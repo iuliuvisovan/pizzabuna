@@ -5,5 +5,52 @@
   justify-content: center;
   border: 1px solid black;
   margin: 0px 8px 0px 8px;
-  padding: 4px;
+  overflow: hidden;
+
+  .value {
+    padding: 6px;
+    font-size: 20px;
+  }
+
+  .name {
+    background-color: #ffab91;
+    padding: 6px;
+    text-align: center;
+  }
+
+  &.bold {
+    font-weight: 600;
+
+    .name {
+      background-color: #ff5722;
+    }
+  }
+
+  &.green {
+    .name {
+      background-color: #dcedc8;
+    }
+
+    &.bold {
+      font-weight: 600;
+
+      .name {
+        background-color: #8bc34a;
+      }
+    }
+  }
+
+  &.blue {
+    .name {
+      background-color: #81d4fa;
+    }
+
+    &.bold {
+      font-weight: 600;
+
+      .name {
+        background-color: #03a9f4;
+      }
+    }
+  }
 }

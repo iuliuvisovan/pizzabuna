@@ -1,12 +1,39 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+
+h2 {
+  margin-top: 40px;
+}
+
+h3 {
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+
+h4 {
+  margin: 8px 0;
+}
+
 .App {
   height: 100%;
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 18px;
+  max-width: 1000px;
 
   input {
-    border-radius: 3px;
-    width: 64px;
+    border-radius: 6px;
     text-align: center;
     margin: 0px 8px 0px 8px;
+    font-size: 16px;
+    padding: 4px;
+    border: 2px solid #11d7f3;
+    width: 50px;
   }
 
   div {
