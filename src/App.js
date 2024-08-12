@@ -17,14 +17,14 @@ const MONTHLY_RENT_PRICE_EURO = 1000;
 const OVEN_DAILY_RUNNING_HOURS = 12;
 
 function App() {
-  const [pizzasSoldPerDay, setPizzasSoldPerDay] = useState(120);
-  const [averagePizzaSellPrice, setAveragePizzaSellPrice] = useState(42);
+  const [pizzasSoldPerDay, setPizzasSoldPerDay] = useState(100);
+  const [averagePizzaSellPrice, setAveragePizzaSellPrice] = useState(38);
   const [averagePizzaCreatePrice, setAveragePizzaCreatePrice] = useState(10);
   const [salaryOne, setSalaryOne] = useState(5000);
   const [salaryTwo, setSalaryTwo] = useState(5000);
-  const [shareOne, setShareOne] = useState(0.25);
-  const [shareTwo, setShareTwo] = useState(0.25);
-  const [shareThree, setShareThree] = useState(0.5);
+  const [shareOne, setShareOne] = useState(0.2);
+  const [shareTwo, setShareTwo] = useState(0.2);
+  const [shareThree, setShareThree] = useState(0.6);
 
   const moneyFromPizza = averagePizzaSellPrice * pizzasSoldPerDay * DAYS_IN_A_MONTH;
   const moneyFromSauces = PRICE_PER_SAUCE * (pizzasSoldPerDay * SAUCE_FREQUENCY) * DAYS_IN_A_MONTH;
@@ -48,8 +48,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="App-header">Pizza Bună SRL</h1>
-      <div className="section" style={{ paddingTop: 150 }}>
+      <h1 className="App-header">🍕 Pizza Bună SRL</h1>
+      <div className="section" style={{ paddingTop: 120 }}>
         <div>
           <h4>Pizzas Sold Per Day:</h4>
           <input value={pizzasSoldPerDay} onChange={(e) => setPizzasSoldPerDay(+e.target.value)} />
@@ -70,6 +70,40 @@ function App() {
           <h4>2nd Salary (RON NET):</h4>
           <input value={salaryTwo} onChange={(e) => setSalaryTwo(+e.target.value)} />
         </div>
+        <strong style={{ marginTop: 40 }}>📋 Presets</strong>
+        <button
+          onClick={() => {
+            setSalaryOne(5000);
+            setSalaryTwo(5000);
+            setShareOne(0.2);
+            setShareTwo(0.2);
+            setShareThree(0.6);
+          }}
+        >
+          5000 RON + 20%
+        </button>
+        <button
+          onClick={() => {
+            setSalaryOne(4000);
+            setSalaryTwo(4000);
+            setShareOne(0.25);
+            setShareTwo(0.25);
+            setShareThree(0.5);
+          }}
+        >
+          4000 RON + 25%
+        </button>
+        <button
+          onClick={() => {
+            setSalaryOne(3000);
+            setSalaryTwo(3000);
+            setShareOne(0.3);
+            setShareTwo(0.3);
+            setShareThree(0.4);
+          }}
+        >
+          3000 RON + 30%
+        </button>
       </div>
       <div className="section">
         <h2>💹⬆️ Recurring Monthly Income</h2>
@@ -173,21 +207,21 @@ function App() {
           <VariableBox blue variable={`3rd (${shareThree * 100}%)`} value={ronAndEuro(minZero(monthlyProfit * shareThree))} />
         </div>
         <h2>Total Income Per Person (Salary + Shares)</h2>
-        <h3>Person 1</h3>
+        <h3>👨‍🍳 Person 1</h3>
         <div>
           <VariableBox blue variable={`Salary One`} value={ronAndEuro(salaryOne)} /> +
-          <VariableBox blue variable={`25% of profits`} value={ronAndEuro(minZero(monthlyProfit * shareOne))} /> =
+          <VariableBox blue variable={`${shareOne * 100}% of profits`} value={ronAndEuro(minZero(monthlyProfit * shareOne))} /> =
           <VariableBox blue variable={`Total Monthly Income`} value={ronAndEuro(salaryOne + minZero(monthlyProfit * shareOne))} bold />
         </div>
-        <h3>Person 2</h3>
+        <h3>👨‍🍳 Person 2</h3>
         <div>
           <VariableBox blue variable={`Salary Two`} value={ronAndEuro(salaryTwo)} /> +
-          <VariableBox blue variable={`25% of profits`} value={ronAndEuro(minZero(monthlyProfit * shareTwo))} /> =
+          <VariableBox blue variable={`${shareTwo * 100}% of profits`} value={ronAndEuro(minZero(monthlyProfit * shareTwo))} /> =
           <VariableBox blue variable={`Total Monthly Income`} value={ronAndEuro(salaryTwo + minZero(monthlyProfit * shareTwo))} bold />
         </div>
-        <h3>Person 3</h3>
+        <h3>👨‍💻 Person 3</h3>
         <div>
-          <VariableBox blue variable={`50% of profits`} value={ronAndEuro(minZero(monthlyProfit * shareThree))} /> =
+          <VariableBox blue variable={`${shareThree * 100}% of profits`} value={ronAndEuro(minZero(monthlyProfit * shareThree))} /> =
           <VariableBox blue variable={`Total Monthly Income`} value={ronAndEuro(minZero(monthlyProfit * shareThree))} bold />
         </div>
         <h2>Total Monthly Taxes:</h2>
