@@ -12,6 +12,7 @@ const SAUCE_FREQUENCY = 0.5;
 const SAUCE_COST_PRICE = 1;
 const OVEN_CONSUMPTION_KW = 8.4;
 const PIZZA_BOX_COST_PRICE = 8.4;
+const SALARY_TAX_TO_GROSS_MULTIPLIER = 1.67;
 
 function App() {
   const [pizzasSoldPerDay, setPizzasSoldPerDay] = useState(100);
@@ -21,6 +22,9 @@ function App() {
   const [monthlyRentPriceEuro, setMonthlyRentPriceEuro] = useState(1000);
   const [salaryOne, setSalaryOne] = useState(5000);
   const [salaryTwo, setSalaryTwo] = useState(5000);
+  const [shareOne, setShareOne] = useState(0.25);
+  const [shareTwo, setShareTwo] = useState(0.25);
+  const [shareThree, setShareThree] = useState(0.5);
 
   const moneyFromPizza = averagePizzaSellPrice * pizzasSoldPerDay * DAYS_IN_A_MONTH;
   const moneyFromSauces = PRICE_PER_SAUCE * SAUCE_FREQUENCY * pizzasSoldPerDay * DAYS_IN_A_MONTH;
@@ -35,8 +39,8 @@ function App() {
     sauceCostPerMonth +
     pizzaBoxesCostPerMonth +
     ovenCostPerMonth +
-    salaryOne +
-    salaryTwo +
+    salaryOne * SALARY_TAX_TO_GROSS_MULTIPLIER +
+    salaryTwo * SALARY_TAX_TO_GROSS_MULTIPLIER +
     monthlyRentPriceEuro * EURO_VALUE +
     TAX_VALUE_PERCENTAGE * monthlyIncome;
 
@@ -44,7 +48,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="App-header">Pizza Buna SRL</h1>
+      <h1 className="App-header">Pizza Bună SRL</h1>
       <div>
         <h4>Pizzas Sold Per Day:</h4>
         <input value={pizzasSoldPerDay} onChange={(e) => setPizzasSoldPerDay(e.target.value)} />
@@ -97,7 +101,6 @@ function App() {
         <VariableBox green variable="RON / month" value={moneyFromSauces} />
         <VariableBox green variable="€ / month" value={Math.round(moneyFromSauces / EURO_VALUE)} />
       </div>
-
       <h2>Recurring Monthly Costs</h2>
       <div>
         <VariableBox variable="RON / month" value={Math.round(monthlyCosts)} />
@@ -142,28 +145,61 @@ function App() {
       </div>
       <h3>Rent: </h3>
       <VariableBox variable="€ / Month" value={monthlyRentPriceEuro} />
-
-      <h3>Tax (1% of Monthly Income): </h3>
-      <VariableBox variable="€ / Month" value={Math.round((monthlyIncome * 0.1) / EURO_VALUE).toLocaleString()} />
-
+      <h3>Income Tax (1%)</h3>
+      <VariableBox variable="Per Month" value={ronAndEuro(monthlyIncome * 0.1)} />
       <h3>1st Salary:</h3>
-      <VariableBox variable="Gross RON / Month" value={salaryOne * 1.67} />
-
+      <div>
+        <VariableBox variable="Gross RON / Month" value={salaryOne * 1.67} />
+        <VariableBox variable="Tax RON / Month" value={salaryOne * 1.67 * 0.4} />
+        <VariableBox variable="NET RON / Month" value={salaryOne} />
+      </div>
       <h3>2nd Salary: </h3>
-      <VariableBox variable="Gross RON / Month" value={salaryTwo * 1.67} />
-
+      <div>
+        <VariableBox variable="Gross RON / Month" value={salaryTwo * 1.67} />
+        <VariableBox variable="Tax RON / Month" value={salaryTwo * 1.67 * 0.4} />
+        <VariableBox variable="NET RON / Month" value={salaryTwo} />
+      </div>
       <h2>Monthly Profit</h2>
       <h3>Monthly Income - Monthly Costs: </h3>
       <div>
-        <VariableBox green variable="Monthly Income (€)" value={Math.round(monthlyIncome / EURO_VALUE)} /> -
-        <VariableBox variable="Monthly Costs (€)" value={Math.round(monthlyCosts / EURO_VALUE).toLocaleString()} />
+        <VariableBox green variable="Monthly Income" value={ronAndEuro(monthlyCosts)} /> -
+        <VariableBox variable="Monthly Costs" value={ronAndEuro(monthlyCosts)} />
         =
-        <VariableBox blue variable="RON / month" value={monthlyProfit.toLocaleString()} />
-        =
-        <VariableBox blue variable="€ / month" value={Math.round(monthlyProfit / EURO_VALUE).toLocaleString()} bold />
+        <VariableBox blue variable="Monthly Profit" value={ronAndEuro(monthlyProfit)} bold />
+      </div>
+      <h2>
+        Profit Splitting ({shareOne * 100} - {shareTwo * 100} - {shareThree * 100}%):
+      </h2>
+      <div>
+        <VariableBox blue variable={`1st (${shareOne * 100}%)`} value={ronAndEuro(monthlyProfit * shareOne)} /> /
+        <VariableBox blue variable={`2nd (${shareTwo * 100}%)`} value={ronAndEuro(monthlyProfit * shareTwo)} /> /
+        <VariableBox blue variable={`3rd (${shareThree * 100}%)`} value={ronAndEuro(monthlyProfit * shareThree)} />
+      </div>
+      <h2>Total Income Per Person (Salary + Shares)</h2>
+      <h3>Person 1</h3>
+      <div>
+        <VariableBox blue variable={`Salary One`} value={ronAndEuro(salaryOne)} /> +
+        <VariableBox blue variable={`25% of profits`} value={ronAndEuro(monthlyProfit * shareOne)} /> =
+        <VariableBox blue variable={`Total Monthly Income`} value={ronAndEuro(salaryOne + monthlyProfit * shareOne)} bold />
+      </div>
+      <h3>Person 2</h3>
+      <div>
+        <VariableBox blue variable={`Salary Two`} value={ronAndEuro(salaryTwo)} /> +
+        <VariableBox blue variable={`25% of profits`} value={ronAndEuro(monthlyProfit * shareTwo)} /> =
+        <VariableBox blue variable={`Total Monthly Income`} value={ronAndEuro(salaryTwo + monthlyProfit * shareOne)} bold />
+      </div>
+      <h3>Person 3</h3>
+      <div>
+        <VariableBox blue variable={`50% of profits`} value={ronAndEuro(monthlyProfit * shareThree)} /> =
+        <VariableBox blue variable={`Total Monthly Income`} value={ronAndEuro(monthlyProfit * shareThree)} bold />
       </div>
     </div>
   );
+}
+
+function ronAndEuro(priceInRon) {
+  const roundedPrice = Math.round(priceInRon);
+  return `${roundedPrice.toLocaleString()} RON (${Math.round(priceInRon / EURO_VALUE).toLocaleString()} €)`;
 }
 
 export default App;
