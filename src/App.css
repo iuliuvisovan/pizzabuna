@@ -3,28 +3,48 @@ body {
   justify-content: center;
 }
 
+h1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 24px;
+  background: orange;
+  color: #fff;
+  margin: 0;
+  width: 354px;
+}
+
 h2 {
   margin-top: 40px;
 }
 
 h3 {
   margin-bottom: 12px;
-  margin-top: 12px;
+  margin-top: 24px;
 }
 
 h4 {
-  margin: 8px 0;
+  margin: 24px 0;
 }
 
 .App {
-  height: 100%;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
   font-size: 18px;
-  max-width: 1000px;
+  display: flex;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 0 24px;
+    border-radius: 0;
+    flex-shrink: 0;
+    height: 98vh;
+    box-sizing: border-box;
+
+    &:not(:last-of-type) {
+      border-right: 1px solid grey;
+    }
+  }
 
   input {
     border-radius: 6px;
@@ -37,14 +57,7 @@ h4 {
   }
 
   div {
-    margin-bottom: 8px;
     display: flex;
-    align-items: center;
-    border-radius: 8px;
-  }
-
-  p {
-    display: inline-flex;
     align-items: center;
   }
 }
