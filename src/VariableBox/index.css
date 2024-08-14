@@ -56,4 +56,18 @@
       }
     }
   }
+
+  &.gray {
+    .name {
+      background-color: #989898;
+    }
+
+    &.bold {
+      font-weight: 600;
+
+      .name {
+        background-color: #767676;
+      }
+    }
+  }
 }

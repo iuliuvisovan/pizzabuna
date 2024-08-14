@@ -11,17 +11,17 @@ const TAX_VALUE_PERCENTAGE = 0.1;
 const SAUCE_FREQUENCY = 0.5;
 const SAUCE_COST_PRICE = 1;
 const OVEN_CONSUMPTION_KW = 8.4;
-const PIZZA_BOX_COST_PRICE = 8.4;
+const PIZZA_BOX_COST_PRICE = 1;
 const SALARY_TAX_TO_GROSS_MULTIPLIER = 1.67;
 const MONTHLY_RENT_PRICE_EURO = 1000;
 const OVEN_DAILY_RUNNING_HOURS = 12;
 
 function App() {
   const [pizzasSoldPerDay, setPizzasSoldPerDay] = useState(100);
-  const [averagePizzaSellPrice, setAveragePizzaSellPrice] = useState(38);
+  const [averagePizzaSellPrice, setAveragePizzaSellPrice] = useState(40);
   const [averagePizzaCreatePrice, setAveragePizzaCreatePrice] = useState(10);
-  const [salaryOne, setSalaryOne] = useState(5000);
-  const [salaryTwo, setSalaryTwo] = useState(5000);
+  const [salaryOne, setSalaryOne] = useState(4000);
+  const [salaryTwo, setSalaryTwo] = useState(4000);
   const [shareOne, setShareOne] = useState(0.2);
   const [shareTwo, setShareTwo] = useState(0.2);
   const [shareThree, setShareThree] = useState(0.6);
@@ -73,40 +73,40 @@ function App() {
         <strong style={{ marginTop: 40 }}>📋 Presets</strong>
         <button
           onClick={() => {
-            setSalaryOne(5000);
-            setSalaryTwo(5000);
+            setSalaryOne(4000);
+            setSalaryTwo(4000);
             setShareOne(0.2);
             setShareTwo(0.2);
             setShareThree(0.6);
           }}
         >
-          5000 RON + 20%
+          4000 RON + 20%
         </button>
         <button
           onClick={() => {
-            setSalaryOne(4000);
-            setSalaryTwo(4000);
+            setSalaryOne(3500);
+            setSalaryTwo(3500);
             setShareOne(0.25);
             setShareTwo(0.25);
             setShareThree(0.5);
           }}
         >
-          4000 RON + 25%
+          3500 RON + 25%
         </button>
         <button
           onClick={() => {
-            setSalaryOne(3000);
-            setSalaryTwo(3000);
+            setSalaryOne(2400);
+            setSalaryTwo(2400);
             setShareOne(0.3);
             setShareTwo(0.3);
             setShareThree(0.4);
           }}
         >
-          3000 RON + 30%
+          2400 RON (minim pe economie) + 30%
         </button>
       </div>
       <div className="section">
-        <h2>💹⬆️ Recurring Monthly Income</h2>
+        <h2>💹 ⬆️ Recurring Monthly Income</h2>
         <div>
           <VariableBox green variable="RON / month" value={Math.round(monthlyIncome)} />
           <VariableBox green variable="€ / month" value={Math.round(monthlyIncome / EURO_VALUE)} bold />
@@ -132,7 +132,7 @@ function App() {
         <h2>💸🔻 Recurring Monthly Costs</h2>
         <div>
           <VariableBox variable="RON / month" value={Math.round(monthlyCosts)} />
-          <VariableBox variable="€ / month" value={Math.round(monthlyCosts / EURO_VALUE).toLocaleString()} bold />
+          <VariableBox variable="€ / month" value={Math.round(monthlyCosts / EURO_VALUE)} bold />
         </div>
         <h3>🫓🧀🌿 Pizza Ingredients Cost: </h3>
         <div>
@@ -146,7 +146,7 @@ function App() {
         </div>
         <h3>🥫 Buying Sauce: </h3>
         <div>
-          <VariableBox variable="Sauce Price" value={SAUCE_COST_PRICE} />
+          <VariableBox variable="Sauce Buy Price" value={`${SAUCE_COST_PRICE} RON`} />
           *
           <VariableBox variable="Sauce Freq." value={SAUCE_FREQUENCY} />*
           <VariableBox variable="Pizzas Per Day" value={pizzasSoldPerDay} />=
@@ -157,7 +157,7 @@ function App() {
         <div>
           <VariableBox variable="Pizza Box Price" value={PIZZA_BOX_COST_PRICE} />
           *
-          <VariableBox variable="pizzasPerDay" value={pizzasSoldPerDay} />
+          <VariableBox variable="Pizzas per Day" value={pizzasSoldPerDay} />
           =
           <VariableBox variable="RON / day" value={pizzaBoxesCostPerMonth / 30} />
           =
@@ -166,7 +166,7 @@ function App() {
         <h3>⚡ Electric Oven Running: </h3>
         <div>
           <VariableBox variable="Consumption" value={`${OVEN_CONSUMPTION_KW} kW/h`} />*
-          <VariableBox variable="Price per kWH" value={`${OVEN_CONSUMPTION_KW} RON`} />*
+          <VariableBox variable="Price per kWH" value={`${PRICE_PER_KWH} RON`} />*
           <VariableBox variable="Hours / day" value={OVEN_DAILY_RUNNING_HOURS} />
           =
           <VariableBox variable="Per month" value={`${ovenCostPerMonth} RON`} />
@@ -193,7 +193,7 @@ function App() {
         <h2>🤑 Recurring Monthly Profit</h2>
         <h3>Monthly Income - Monthly Costs: </h3>
         <div>
-          <VariableBox green variable="Monthly Income" value={ronAndEuro(monthlyCosts)} /> -
+          <VariableBox green variable="Monthly Income" value={ronAndEuro(monthlyIncome)} /> -
           <VariableBox variable="Monthly Costs" value={ronAndEuro(monthlyCosts)} />
           =
           <VariableBox blue variable="Monthly Profit" value={ronAndEuro(monthlyProfit)} bold />
@@ -202,9 +202,9 @@ function App() {
           💰🤝 Profit Splitting ({shareOne * 100} - {shareTwo * 100} - {shareThree * 100}%):
         </h2>
         <div>
-          <VariableBox blue variable={`1st (${shareOne * 100}%)`} value={ronAndEuro(minZero(monthlyProfit * shareOne))} /> /
-          <VariableBox blue variable={`2nd (${shareTwo * 100}%)`} value={ronAndEuro(minZero(monthlyProfit * shareTwo))} /> /
-          <VariableBox blue variable={`3rd (${shareThree * 100}%)`} value={ronAndEuro(minZero(monthlyProfit * shareThree))} />
+          <VariableBox blue variable={`👨‍🍳 1st (${shareOne * 100}%)`} value={ronAndEuro(minZero(monthlyProfit * shareOne))} /> /
+          <VariableBox blue variable={`👨‍🍳 2nd (${shareTwo * 100}%)`} value={ronAndEuro(minZero(monthlyProfit * shareTwo))} /> /
+          <VariableBox blue variable={`👨‍💻 3rd (${shareThree * 100}%)`} value={ronAndEuro(minZero(monthlyProfit * shareThree))} />
         </div>
         <h2>Total Income Per Person (Salary + Shares)</h2>
         <h3>👨‍🍳 Person 1</h3>
@@ -226,10 +226,11 @@ function App() {
         </div>
         <h2>Total Monthly Taxes:</h2>
         <div>
-          <VariableBox variable="Income Tax" value={ronAndEuro(monthlyIncome * 0.1)} /> +
-          <VariableBox variable="Salary One Tax " value={ronAndEuro(salaryOne * 1.67 * 0.4)} /> +
-          <VariableBox variable="Salary Two Tax" value={ronAndEuro(salaryTwo * 1.67 * 0.4)} /> =
+          <VariableBox gray variable="Income Tax" value={ronAndEuro(monthlyIncome * 0.1)} /> +
+          <VariableBox gray variable="Salary One Tax " value={ronAndEuro(salaryOne * 1.67 * 0.4)} /> +
+          <VariableBox gray variable="Salary Two Tax" value={ronAndEuro(salaryTwo * 1.67 * 0.4)} /> =
           <VariableBox
+            gray
             variable="Tax RON / Month"
             value={ronAndEuro(monthlyIncome * 0.1 + salaryOne * 1.67 * 0.4 + salaryTwo * 1.67 * 0.4)}
             bold
@@ -246,7 +247,7 @@ function minZero(value) {
 
 function ronAndEuro(priceInRon) {
   const roundedPrice = Math.round(priceInRon);
-  return `${roundedPrice.toLocaleString()} RON (${Math.round(priceInRon / EURO_VALUE).toLocaleString()} €)`;
+  return `${roundedPrice.toLocaleString('ro-RO')} RON (${Math.round(priceInRon / EURO_VALUE).toLocaleString('ro-RO')} €)`;
 }
 
 export default App;
