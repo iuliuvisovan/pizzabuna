@@ -8,7 +8,7 @@ const PRICE_PER_KWH = 0.8;
 const SAUCE_SELL_PRICE = 5;
 const SAUCE_COST_PRICE = 1;
 const EURO_VALUE = 4.98;
-const TAX_VALUE_PERCENTAGE = 0.01;
+const INCOME_TAX_PERCENTAGE = 0.01;
 const SAUCE_FREQUENCY = 0.5;
 const OVEN_CONSUMPTION_KW = 8.4;
 const PIZZA_BOX_COST_PRICE = 1;
@@ -17,6 +17,9 @@ const MONTHLY_RENT_PRICE_EURO = 1000;
 const MONTHLY_MARKETING_COST = 1000;
 const OVEN_DAILY_RUNNING_HOURS = 12;
 const TAZZ_COST_PERCENTAGE = 0.25;
+const MONTHLY_MISC_SOFTWARE_PRICES = 700;
+const MONTHLY_ACCOUNTANT_COST = 500;
+const MONTHLY_MAINTENANCE_COST = 1000;
 
 function App() {
   const [pizzasSoldPerDay, setPizzasSoldPerDay] = useState(80);
@@ -34,18 +37,24 @@ function App() {
   const pizzaCostPerMonth = averagePizzaCreatePrice * pizzasSoldPerDay * DAYS_IN_A_MONTH;
   const sauceCostPerMonth = SAUCE_COST_PRICE * SAUCE_FREQUENCY * pizzasSoldPerDay * DAYS_IN_A_MONTH;
   const pizzaBoxesCostPerMonth = PIZZA_BOX_COST_PRICE * pizzasSoldPerDay * DAYS_IN_A_MONTH;
-  const ovenCostPerMonth = Math.round(OVEN_CONSUMPTION_KW * PRICE_PER_KWH * OVEN_DAILY_RUNNING_HOURS * DAYS_IN_A_MONTH);
+  const ovenCostPerMonth = OVEN_CONSUMPTION_KW * PRICE_PER_KWH * OVEN_DAILY_RUNNING_HOURS * DAYS_IN_A_MONTH;
   const monthlyIncome = moneyFromPizza + moneyFromSauces;
+  const monthlySalaryCost = salaryOne + salaryTwo;
+  const monthlySalaryTax = salaryOne * SALARY_TAX_TO_GROSS_MULTIPLIER * 0.4 + salaryTwo * SALARY_TAX_TO_GROSS_MULTIPLIER * 0.4;
   const monthlyCosts =
     pizzaCostPerMonth +
     sauceCostPerMonth +
     pizzaBoxesCostPerMonth +
     ovenCostPerMonth +
-    salaryOne * SALARY_TAX_TO_GROSS_MULTIPLIER +
-    salaryTwo * SALARY_TAX_TO_GROSS_MULTIPLIER +
+    TAZZ_COST_PERCENTAGE * monthlyIncome +
+    INCOME_TAX_PERCENTAGE * monthlyIncome +
+    monthlySalaryCost +
+    monthlySalaryTax +
     MONTHLY_RENT_PRICE_EURO * EURO_VALUE +
-    TAX_VALUE_PERCENTAGE * monthlyIncome +
-    MONTHLY_MARKETING_COST;
+    MONTHLY_MARKETING_COST +
+    MONTHLY_ACCOUNTANT_COST +
+    MONTHLY_MISC_SOFTWARE_PRICES +
+    MONTHLY_MAINTENANCE_COST;
 
   const monthlyProfit = monthlyIncome - monthlyCosts;
 
@@ -139,7 +148,7 @@ function App() {
         </div>
         <div
           className="section"
-          style={{ height: '83vh', overflowY: 'scroll', paddingBottom: 100, marginTop: 24, paddinRight: 32, marginRight: -32 }}
+          style={{ height: '87vh', overflowY: 'scroll', paddingBottom: 100, marginTop: 24, paddinRight: 32, marginRight: -32 }}
         >
           <h3>🫓🧀🌿 Pizza Ingredients Cost: </h3>
           <div>
@@ -188,24 +197,30 @@ function App() {
           <div>
             <VariableBox variable="Total Income" value={monthlyIncome} /> *
             <VariableBox variable="Tax Percentage" value="1%" unit="" /> =
-            <VariableBox variable="Per Month" value={ronAndEuro(monthlyIncome * TAX_VALUE_PERCENTAGE)} />
+            <VariableBox variable="Per Month" value={ronAndEuro(monthlyIncome * INCOME_TAX_PERCENTAGE)} />
           </div>
-          <h3>🏠 Rent: </h3>
-          <VariableBox variable="Per Month" value={ronAndEuro(MONTHLY_RENT_PRICE_EURO * EURO_VALUE)} />
-          <h3>📣 Marketing: </h3>
-          <VariableBox variable="Per Month" value={MONTHLY_MARKETING_COST} />
           <h3>💸 Salaries:</h3>
           <div>
             <VariableBox variable="Salary One NET" value={salaryTwo} /> +
             <VariableBox variable="Salary Two NET" value={salaryTwo} /> =
-            <VariableBox variable="Per Month" value={salaryOne + salaryTwo} />
+            <VariableBox variable="Per Month" value={monthlySalaryCost} />
           </div>
           <h3>🏛️ Salary Taxes (~40% of Gross): </h3>
           <div>
             <VariableBox variable="Salary One Tax" value={salaryOne * 1.67 * 0.4} /> +
             <VariableBox variable="Salary One Tax" value={salaryTwo * 1.67 * 0.4} /> =
-            <VariableBox variable="Salary Tax Per Month" value={salaryOne * 1.67 * 0.4 + salaryTwo * 1.67 * 0.4} />
+            <VariableBox variable="Salary Tax Per Month" value={monthlySalaryTax} />
           </div>
+          <h3>🏠 Chirie: </h3>
+          <VariableBox variable="Per Month" value={ronAndEuro(MONTHLY_RENT_PRICE_EURO * EURO_VALUE)} />
+          <h3>📣 Marketing: </h3>
+          <VariableBox variable="Per Month" value={MONTHLY_MARKETING_COST} />
+          <h3>🧾 Contabilitate: </h3>
+          <VariableBox variable="Per Month" value={MONTHLY_ACCOUNTANT_COST} />
+          <h3>💻 Software & Banking: </h3>
+          <VariableBox variable="Per Month" value={MONTHLY_MISC_SOFTWARE_PRICES} />
+          <h3>🔧 Maintenance: </h3>
+          <VariableBox variable="Per Month" value={MONTHLY_MAINTENANCE_COST} />
         </div>
       </div>
 
