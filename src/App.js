@@ -150,7 +150,7 @@ function App() {
         </div>
         <div
           className="section"
-          style={{ height: '87vh', overflowY: 'scroll', paddingBottom: 100, marginTop: 24, paddinRight: 32, marginRight: -32 }}
+          style={{ height: '85vh', overflowY: 'scroll', paddingBottom: 100, marginTop: 24, paddinRight: 32, marginRight: -32 }}
         >
           <h3>🫓🧀🌿 Pizza Ingredients Cost: </h3>
           <div>
