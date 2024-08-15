@@ -38,7 +38,6 @@ h4 {
     padding: 0 24px;
     border-radius: 0;
     flex-shrink: 0;
-    height: 98vh;
     box-sizing: border-box;
 
     &:not(:last-of-type) {

@@ -6,15 +6,16 @@
   border: 1px solid #444;
   margin: 0px 8px 0px 8px;
   overflow: hidden;
-  font-size: 16px;
+  font-size: 14px;
   border-radius: 8px;
+  flex-shrink: 0;
 
   .value {
     padding: 6px;
   }
 
   .name {
-    background-color: #ffab91;
+    background-color: #ffb4a6;
     padding: 6px;
     text-align: center;
     width: 100%;
@@ -25,7 +26,7 @@
     font-size: 20px;
 
     .name {
-      background-color: #ff5722;
+      background-color: #ff4522;
     }
   }
 
@@ -67,6 +68,20 @@
 
       .name {
         background-color: #767676;
+      }
+    }
+  }
+
+  &.gold {
+    .name {
+      background-color: #ffd12a;
+    }
+
+    &.bold {
+      font-weight: 600;
+
+      .name {
+        background-color: #ffd12a;
       }
     }
   }
