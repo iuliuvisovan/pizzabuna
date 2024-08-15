@@ -39,15 +39,17 @@ function App() {
   const pizzaBoxesCostPerMonth = PIZZA_BOX_COST_PRICE * pizzasSoldPerDay * DAYS_IN_A_MONTH;
   const ovenCostPerMonth = OVEN_CONSUMPTION_KW * PRICE_PER_KWH * OVEN_DAILY_RUNNING_HOURS * DAYS_IN_A_MONTH;
   const monthlyIncome = moneyFromPizza + moneyFromSauces;
+  const monthlyIncomeTax = monthlyIncome * INCOME_TAX_PERCENTAGE;
   const monthlySalaryCost = salaryOne + salaryTwo;
   const monthlySalaryTax = salaryOne * SALARY_TAX_TO_GROSS_MULTIPLIER * 0.4 + salaryTwo * SALARY_TAX_TO_GROSS_MULTIPLIER * 0.4;
+
   const monthlyCosts =
     pizzaCostPerMonth +
     sauceCostPerMonth +
     pizzaBoxesCostPerMonth +
     ovenCostPerMonth +
     TAZZ_COST_PERCENTAGE * monthlyIncome +
-    INCOME_TAX_PERCENTAGE * monthlyIncome +
+    monthlyIncomeTax +
     monthlySalaryCost +
     monthlySalaryTax +
     MONTHLY_RENT_PRICE_EURO * EURO_VALUE +
@@ -201,14 +203,14 @@ function App() {
           </div>
           <h3>💸 Salaries:</h3>
           <div>
-            <VariableBox variable="Salary One NET" value={salaryTwo} /> +
+            <VariableBox variable="Salary One NET" value={salaryOne} /> +
             <VariableBox variable="Salary Two NET" value={salaryTwo} /> =
             <VariableBox variable="Per Month" value={monthlySalaryCost} />
           </div>
           <h3>🏛️ Salary Taxes (~40% of Gross): </h3>
           <div>
             <VariableBox variable="Salary One Tax" value={salaryOne * 1.67 * 0.4} /> +
-            <VariableBox variable="Salary One Tax" value={salaryTwo * 1.67 * 0.4} /> =
+            <VariableBox variable="Salary Two Tax" value={salaryTwo * 1.67 * 0.4} /> =
             <VariableBox variable="Salary Tax Per Month" value={monthlySalaryTax} />
           </div>
           <h3>🏠 Chirie: </h3>
@@ -261,15 +263,9 @@ function App() {
         </div>
         <h2>Total Monthly Taxes:</h2>
         <div>
-          <VariableBox gray variable="Income Tax" value={ronAndEuro(monthlyIncome * 0.1)} /> +
-          <VariableBox gray variable="Salary One Tax " value={ronAndEuro(salaryOne * 1.67 * 0.4)} /> +
-          <VariableBox gray variable="Salary Two Tax" value={ronAndEuro(salaryTwo * 1.67 * 0.4)} /> =
-          <VariableBox
-            gray
-            variable="Tax Per Month"
-            value={ronAndEuro(monthlyIncome * 0.1 + salaryOne * 1.67 * 0.4 + salaryTwo * 1.67 * 0.4)}
-            bold
-          />
+          <VariableBox gray variable="Income Tax" value={ronAndEuro(monthlyIncome * INCOME_TAX_PERCENTAGE)} /> +
+          <VariableBox gray variable="Salary Tax " value={ronAndEuro(monthlySalaryTax)} /> +
+          <VariableBox gray variable="Tax Per Month" value={ronAndEuro(monthlyIncomeTax + monthlySalaryTax)} bold />
         </div>
       </div>
     </div>
