@@ -1,0 +1,57 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: #444240;
+  background-image: url('./assets/cover.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f7f9fc;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cad5e8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffbf47;
+}
+
+/* Shimmer animation for elements */
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Better focus styles for accessibility */
+*:focus {
+  outline: 2px solid #ffbf47;
+  outline-offset: 2px;
+}
+
+/* Smoother transitions */
+button, a, input, select {
+  transition: all 0.2s ease;
+}
